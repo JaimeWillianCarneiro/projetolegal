@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/favicon.png" />
 
-    <title>PetShop</title>
+    <title>Sistema Flask</title>
     
-	<link rel="stylesheet" href="style-carrinho.css">
+	<link rel="stylesheet" href="{{ url_for('static',  filename='css/style-carrinho.css') }}">
 </head>
 <body>
 
@@ -53,7 +53,7 @@
 
     <!-- conteudo principal -->
     <main>
-        <h2>Produtos</h2>
+        <h2>Bem Vindo,  {{ user }}</h2>
       
         <div class="pizza-area"></div>
     </main>

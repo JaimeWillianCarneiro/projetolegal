@@ -14,25 +14,27 @@
         <div class="img-box">
             <!-- <img src="img3.png"> -->
 
-            <img src="img/img3.png" >
+            <img src="{{ url_for('static', filename='img/img-cadastro.png') }}" >
 
         </div>
         <div class="form-box">
             <h2>Login</h2>
+           
             <p> Ainda não é um membro? <a href="{{ url_for('cadastro') }}">Cadastrar</a></p>
             <!-- <form action="#"> -->
               <form name="form-users" id="formUsers" method="post" >
-
-    
+                
+                <div  style="color: red;" class="alert-class">{{ mensagem }} </div>
+                <h3> <h3> 
                
                 <div class="input-group">
-                    <label for="usuario"> Email</label>
-                    <input type="text"name="user" id="email" placeholder="seuemail@email.com" required>
+                    <label for="usuario"> Usuario</label>
+                    <input type="text"name="usuario" id="usuario" placeholder="seuemail@email.com" required>
                 </div>
 
                 <div class="input-group">
                     <label for="senha">Senha</label>
-                    <input type="password"  name="password" id="password" placeholder="******" required>
+                    <input type="password"  name="senha" id="senha" placeholder="******" required>
                 </div>
 
 <!-- 
@@ -48,66 +50,5 @@
 
     </div>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, updateProfile,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-              apiKey: "AIzaSyBOm2dHRfC0pn_8weQ1zixPHz3cNBpYOKE",
-              authDomain: "petshop-supimpa.firebaseapp.com",
-              projectId: "petshop-supimpa",
-              storageBucket: "petshop-supimpa.appspot.com",
-              messagingSenderId: "999502683212",
-              appId: "1:999502683212:web:47b6a22f62e6526cf968e9"
-            };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-    
-        const auth = getAuth(app);
-    
-        const form = document.getElementById("formUsers")
-    
-    
-        const buttonSubmit = document.getElementById('submitButton');
-    
-        console.log("antes");
-    
-        // app.signInWithEmailAndPassword(auth, "paulorsaf@gmail.com", "123456").then(response => {
-        //     console.log('success', response)
-        // }).catch(error => {
-        //     console.log('error', error)
-        // });
-        // console.log('depois')
-        
-        form.addEventListener('submit', function(event){
-                event.preventDefault();
-    
-                
-                const email = document.getElementById("email").value;
-                const senha = document.getElementById("password").value;
-    
-                buttonSubmit.disabled = true;
-                buttonSubmit.innerHTML = `
-                <div class="spinner-border text-success" role="status">
-                    <span class="sr-only"></span>
-                </div>
-                `;
-                
-                signInWithEmailAndPassword(auth,email, senha)
-			.then(function(userCredential){
-				const user = userCredential.user;
-				window.location.href = "perfil.html";
-			}).catch(function(error){
-				alert("Email e/ou senha incorretos");
-			});
-    
-            });
-    
-    </script>
 </body>
 </html>
