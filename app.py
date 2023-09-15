@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, redirect, make_response,  request, session
+from flask import Flask, render_template, request, redirect, make_response,  request, session,jsonify
 from flask_session import Session
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet 
+import json
 # import request
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.secret_key = Fernet.generate_key()
 Session(app)
 
 
-chave_secreta = Fernet.generate_key()
+
 
 
 usuarios= {
@@ -20,21 +22,25 @@ sessoes_ativas = {
 
 }
 
-# def criptografar_chave(chave: str):
-def encrypt_string(input_string, key):
-    # Gere um objeto de chave Fernet usando a chave fornecida
-    cipher_suite = Fernet(key)
+"""
+Essa biblioteca tive que achar na internet msm, 
+queria ter usado alguma api tipo o site que vc 
+mostrou na aula
+"""
+def criptografar_chave(entrada, chave_secreta):
+    # Gera um objeto de chave Fernet usando a chave fornecida
+    chave_objeto = Fernet(chave_secreta)
 
     # Converta a string de entrada em bytes
-    input_bytes = input_string.encode('utf-8')
+    bytes = entrada.encode('utf-8')
 
     # Criptografe a string
-    encrypted_string = cipher_suite.encrypt(input_bytes)
+    entrada_criptografada = chave_objeto.encrypt(bytes)
 
     # Converta a saída criptografada em uma representação de string hexadecimal
-    encrypted_hex_string = encrypted_string.hex()
+    cripto_hexa= entrada_criptografada.hex()
 
-    return encrypted_hex_string
+    return cripto_hexa
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -54,7 +60,15 @@ def login():
         
         # return render_template("home.html" , user = usuario)
         response = make_response(redirect("/welcome"))
-        response.set_cookie("username", usuario)
+        # response.set_cookie("username", usuario)
+
+        """
+        Alteração:
+        """
+        response.set_cookie("user",criptografar_chave(usuario,app.secret_key))
+        sessoes_ativas[criptografar_chave(usuario,app.secret_key)] = {"user_name": usuario}
+
+
         return response
     
     return render_template('login.html')
@@ -63,7 +77,7 @@ def login():
 @app.route("/welcome")
 def home():
     # return render_template("home.html")
-    usuario = request.cookies.get("username")
+    usuario = request.cookies.get("user")
 
 
     if usuario:
