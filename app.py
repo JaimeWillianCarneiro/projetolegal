@@ -12,18 +12,27 @@ Session(app)
 
 
 
+json_file = 'sessions.json'
+sessoes_ativas = {}
+try:
+    with open(json_file, 'r') as file:
+         sessoes_ativas= json.load(file)
+except FileNotFoundError:
+    pass
 
 usuarios= {
     "Jaime": "senha", 
     "Willian": "123456", 
     "Hendryk": "Coxinha"
 }
-sessoes_ativas = {}
+
 
 """
 Essa biblioteca tive que achar na internet msm, 
 queria ter usado alguma api tipo o site que vc 
 mostrou na aula
+Essa api ela gera uma entradad diferente toda vez que colocamos uma entrada, 
+ou seja, se um usuario entrar diferentes vezes, gera diferentes tokens
 """
 def criptografar_chave(entrada, chave_secreta):
     # Gera um objeto de chave Fernet usando a chave fornecida
@@ -40,6 +49,11 @@ def criptografar_chave(entrada, chave_secreta):
 
     return cripto_hexa
 
+
+def update_sessions_json():
+    # Atualize o arquivo JSON com as sessões ativas
+    with open(json_file, 'w') as file:
+        json.dump(sessoes_ativas, file)
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
@@ -63,9 +77,16 @@ def login():
         """
         Alteração:
         """
-        sessoes_ativas[criptografar_chave(usuario,app.secret_key)] = {"user_name": usuario}
-        response.set_cookie("user",criptografar_chave(usuario,app.secret_key))
-        
+        chave = criptografar_chave(usuario,app.secret_key)
+        if chave not in sessoes_ativas.keys():
+
+            sessoes_ativas[chave] = {"user_name": usuario}
+        else:
+            del sessoes_ativas[chave]
+            sessoes_ativas[chave] = {"user_name": usuario}
+
+        response.set_cookie("user", chave)
+        update_sessions_json()
 
 
         return response
@@ -78,17 +99,21 @@ def home():
     # return render_template("home.html")
     usuario = request.cookies.get("user")
 
-
+    sessoes = sessoes_ativas.values()
     if usuario:
-         nome = sessoes_ativas[usuario]
-         return render_template("home.html", usuario= usuario, nome = nome)
+        nomes = sessoes_ativas[usuario]
+        nome = nomes['user_name']
+        return render_template("home.html", usuario= usuario, sessoes = sessoes, nome = nome)
     # if usuario in sessoes_ativas:
     #     usuario_info = sessoes_ativas[usuario]
     #     return render_template("home.html", usuario_info= usuario_info)
         
     else:
         return redirect('/login')
-
+@app.route('/active_sessions')
+def get_active_sessions():
+    # Retorne as sessões ativas como JSON
+    return jsonify(sessoes_ativas)
 
 if __name__== "__main__":
     app.run(debug=True)

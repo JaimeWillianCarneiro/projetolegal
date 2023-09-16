@@ -22,8 +22,13 @@
 
               <form name="form-users" id="formUsers" method="post" >
                 
+
+                {% if mensagem %}
                 <div  style="color: red;" class="alert-class">{{ mensagem }} </div>
                 <h3> <h3> 
+
+            {% endif %}
+    
                
                 <div class="input-group">
                     <label for="usuario"> Usuario</label>
