@@ -18,9 +18,7 @@ usuarios= {
     "Willian": "123456", 
     "Hendryk": "Coxinha"
 }
-sessoes_ativas = {
-
-}
+sessoes_ativas = {}
 
 """
 Essa biblioteca tive que achar na internet msm, 
@@ -65,8 +63,9 @@ def login():
         """
         Alteração:
         """
-        response.set_cookie("user",criptografar_chave(usuario,app.secret_key))
         sessoes_ativas[criptografar_chave(usuario,app.secret_key)] = {"user_name": usuario}
+        response.set_cookie("user",criptografar_chave(usuario,app.secret_key))
+        
 
 
         return response
@@ -81,7 +80,8 @@ def home():
 
 
     if usuario:
-         return render_template("home.html", usuario= usuario)
+         nome = sessoes_ativas[usuario]
+         return render_template("home.html", usuario= usuario, nome = nome)
     # if usuario in sessoes_ativas:
     #     usuario_info = sessoes_ativas[usuario]
     #     return render_template("home.html", usuario_info= usuario_info)
