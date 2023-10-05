@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.png" />
+    <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    crossorigin="anonymous"
+  />
+    <title>Sistema Flask</title>
+    
+	<link rel="stylesheet" href="{{ url_for('static',  filename='css/style-carrinho.css') }}">
+</head>
+<body>
+
+    
+
+    <!-- modelos de pizza na lista e no carrinho -->
+   
+    <!-- /models -->
+
+    <!-- .menu-openner aparecera no modo mobile -->
+    <header>
+        <h1>Notes</h1>
+        <h3 id="bemvindo">  Bem Vindo, {{nome}}</h3> 
+        
+ 
+    
+     <a class="navbar-brand" href="{{ url_for('auth.criar_nota') }}">Criar Nota</a> 
+      <a class="nav-link" href="{{ url_for('auth.exibir_notas') }}">Minhas Notas <span class="sr-only">Minhas Notas</span></a>
+      <a class="nav-link" href="#">Meu perfil <span class="sr-only">Meu Perfil</span></a>
+     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarNav">
+       <ul class="navbar-nav">
+         <li class="nav-item active">
+           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="#">Features</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="#">Pricing</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link disabled" href="#">Disabled</a>
+         </li>
+       </ul>
+     </div>
+   </nav>
+        -->
+    </header>
+    <!-- /menu-openner -->
+    
+
+    <!-- conteudo principal -->
+    <main>
+        <h3>Adicione uma nota</h3>
+
+   <form method="POST">
+    <!-- <label for="titulo">Título da Nota:</label>
+    <input type="text" name="titulo" required>
+    <textarea name="note" id="note" class="form-control"></textarea>
+        <br />
+        <div align="center">
+          <button type="submit" class="btn btn-primary">Add Note</button>
+        </div> -->
+      
+        <div class="form-group">
+            <label for="titulo">Título da Nota:</label>
+            <input type="text" name="titulo" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="conteudo">Conteúdo da Nota:</label>
+            <textarea name="conteudo" rows="4" class="form-control" required></textarea>
+        </div>
+    </form>
+    <!-- /conteudo principal -->
+
+<!-- <h2> kakkaa</h2> -->
+
+
+    </main>
+
+
+ 
+    
+     <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+    
+   
+</body>
+
+
+</html>

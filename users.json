@@ -1,0 +1,45 @@
+{
+    "usuarios": [
+      {
+        "perfil_usuario": {
+           "id": 1, 
+          "nome": "Jaime",
+          "email": "email1@example.com",
+          "idade": 30,
+          "cidade": "Cidade do Usuário 1"
+        },
+        "notas": [
+          {
+            "titulo": "Título da Nota 1",
+            "conteudo": "Conteúdo da Nota 1",
+            "data_criacao": "2023-10-05",
+            "categoria": "Trabalho"
+          },
+          {
+            "titulo": "Título da Nota 2",
+            "conteudo": "Conteúdo da Nota 2",
+            "data_criacao": "2023-10-06",
+            "categoria": "Pessoal"
+          }
+        ]
+      },
+      {
+        "perfil_usuario": {
+         "id": 2, 
+          "nome": "Nome do Usuário 2",
+          "email": "email2@example.com",
+          "idade": 25,
+          "cidade": "Cidade do Usuário 2"
+        },
+        "notas": [
+          {
+            "titulo": "Título da Nota 3",
+            "conteudo": "Conteúdo da Nota 3",
+            "data_criacao": "2023-10-07",
+            "categoria": "Estudo"
+          }
+        ]
+      }
+    ]
+  }
+  
