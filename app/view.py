@@ -40,11 +40,11 @@ def criar_nota():
         # criador = session.get('usuario_id')  # Supondo que você tenha informações de usuário em sessões
         criador = request.cookies.get("user")
         notas = ler_notas()
-        notas.append({'titulo': titulo, 'conteudo': conteudo, 'criador': criador})
+        notas.append({'titulo': titulo, 'conteudo': conteudo, 'criador': criador, 'done': False})
         with open('notas.json', 'w') as file:
             json.dump(notas, file)
         flash('Nota criada com sucesso!', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('welcome'))
     return render_template('home.html')
 
 # Rota para editar uma nota existente
@@ -59,7 +59,9 @@ def editar_nota(id):
             json.dump(notas, file)
         flash('Nota editada com sucesso!', 'success')
         return redirect(url_for('index'))
-    return render_template('nota_form.html', nota=nota)
+    return render_template('edit.html', nota=nota)
+
+
 
 # Rota para excluir uma nota
 @view.route('/excluir_nota/<int:id>')
